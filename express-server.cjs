@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(express.static('public'));
-app.use('/qr-images', express.static('qr-images'));
+// app.use('/qr-images', express.static('qr-images'));
 
 // Store for invoice tracking (in production, use a database)
 const invoices = new Map();
