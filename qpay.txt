@@ -1,0 +1,68 @@
+# QPay API Curl Commands
+
+## 1. Create Invoice
+curl -X POST http://localhost:3000/api/create-invoice \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "Test Payment",
+    "amount": 1000,
+    "customerCode": "terminal"
+  }'
+
+## 2. Check Payment Status (GET)
+curl -X GET http://localhost:3000/api/payment-status/YOUR_INVOICE_ID
+
+## 3. Check Payment Status (POST - QPay format)
+curl -X POST http://localhost:3000/qpay/check \
+  -H "Content-Type: application/json" \
+  -d '{"object_id": "YOUR_INVOICE_ID"}'
+
+## 4. Simulate Payment (Webhook Callback)
+curl -X POST http://localhost:3000/qpay/callback \
+  -H "Content-Type: application/json" \
+  -d '{
+    "object_id": "YOUR_INVOICE_ID",
+    "object_type": "INVOICE",
+    "payment_status": "PAID",
+    "payment_amount": 1000,
+    "payment_date": "2025-07-29T11:22:24Z",
+    "sender_invoice_no": "INV_123456789",
+    "invoice_description": "Test Payment",
+    "merchant_id": "GRAND_IT",
+    "transaction_id": "txn_123456789",
+    "payment_method": "QPAY",
+    "customer_phone": "99999999",
+    "timestamp": 1753788144000
+  }'
+
+## 5. List All Invoices
+curl -X GET http://localhost:3000/api/invoices
+
+## Example with Real Invoice ID (ea5b9065-e9b6-4c62-b9f0-f46b1c3332e6):
+
+### Check Payment Status
+curl -X GET http://localhost:3000/api/payment-status/ea5b9065-e9b6-4c62-b9f0-f46b1c3332e6
+
+### Mark as Paid
+curl -X POST http://localhost:3000/qpay/callback \
+  -H "Content-Type: application/json" \
+  -d '{
+    "object_id": "ea5b9065-e9b6-4c62-b9f0-f46b1c3332e6",
+    "object_type": "INVOICE",
+    "payment_status": "PAID",
+    "payment_amount": 1000,
+    "payment_date": "2025-07-29T11:22:24Z",
+    "sender_invoice_no": "INV_1753788144",
+    "invoice_description": "Test Payment",
+    "merchant_id": "GRAND_IT",
+    "transaction_id": "txn_1753788144",
+    "payment_method": "QPAY",
+    "customer_phone": "99999999",
+    "timestamp": 1753788144000
+  }'
+
+## Notes:
+- Replace YOUR_INVOICE_ID with actual invoice ID
+- Server must be running on localhost:3000
+- Payment simulation works through webhook callback endpoint
+- All timestamps are in UTC format

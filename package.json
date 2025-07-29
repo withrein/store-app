@@ -14,8 +14,12 @@
   "dependencies": {
     "@quasar/extras": "^1.17.0",
     "@tailwindcss/vite": "^4.1.11",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
     "firebase": "^12.0.0",
     "lint": "^0.8.19",
+    "qrcode": "^1.5.4",
     "quasar": "^2.18.2",
     "sass": "^1.89.2",
     "vue": "^3.5.18"
