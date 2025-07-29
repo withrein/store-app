@@ -1,30 +1,20 @@
 // firebasePush.js
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import products from './products.json' assert { type: 'json' };
 
-// Firebase config
+
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+
 
 // Init Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
-// Upload products from JSON
-(async () => {
-  for (const product of products) {
-    try {
-      await setDoc(doc(db, 'products', product.id), product);
-      console.log(`✅ Uploaded: ${product.title}`);
-    } catch (err) {
-      console.error(`❌ Failed: ${product.title}`, err);
-    }
-  }
-})();
+
+
+
